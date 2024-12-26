@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
-        VIRTUAL_ENV_DIR = "/home/ubuntu/myenv"  // Virtual environment path
-        REQUIREMENTS_FILE = "/home/ubuntu/proj_lts_2/requirements.txt"  // Path to requirements.txt
+        VIRTUAL_ENV_DIR = "${WORKSPACE}/myenv"  // Use Jenkins workspace for virtual environment
+        REQUIREMENTS_FILE = "${WORKSPACE}/requirements.txt"  // Path to requirements.txt
     }
     stages {
         stage('Checkout') {
@@ -41,7 +41,7 @@ pipeline {
                     // Run tests using pytest
                     sh """
                         source ${VIRTUAL_ENV_DIR}/bin/activate
-                        pytest /home/ubuntu/proj_lts_2
+                        pytest ${WORKSPACE}
                     """
                 }
             }
