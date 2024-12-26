@@ -17,7 +17,6 @@ pipeline {
                     // Ensure Python virtual environment is set up
                     sh """
                         python3 -m venv ${VIRTUAL_ENV_DIR}
-                        source ${VIRTUAL_ENV_DIR}/bin/activate
                     """
                 }
             }
@@ -28,8 +27,7 @@ pipeline {
                 script {
                     // Install dependencies from requirements.txt
                     sh """
-                        source ${VIRTUAL_ENV_DIR}/bin/activate
-                        pip install -r ${REQUIREMENTS_FILE}
+                        bash -c 'source ${VIRTUAL_ENV_DIR}/bin/activate && pip install -r ${REQUIREMENTS_FILE}'
                     """
                 }
             }
@@ -40,8 +38,7 @@ pipeline {
                 script {
                     // Run tests using pytest
                     sh """
-                        source ${VIRTUAL_ENV_DIR}/bin/activate
-                        pytest ${WORKSPACE}
+                        bash -c 'source ${VIRTUAL_ENV_DIR}/bin/activate && pytest ${WORKSPACE}'
                     """
                 }
             }
